@@ -3,16 +3,16 @@ import { UrlWithParsedQuery } from "url";
 import * as url from "url";
 
 export function request(req: IncomingMessage): void {
-const parsedUrl: UrlWithParsedQuery = url.parse(
+  const parsedUrl: UrlWithParsedQuery = url.parse(
     `${req.headers.host}${req.url}`,
     true
-);
+  );
 
-const reqWithUrl: { [key: symbol | string | number]: any } = req;
+  const reqWithUrl: { [key: symbol | string | number]: any } = req;
 
-Object.keys(parsedUrl).forEach((key: string) => {
+  Object.keys(parsedUrl).forEach((key: string) => {
     if (key in parsedUrl && key in reqWithUrl) {
-        reqWithUrl[key] = (parsedUrl as any )[key];
+      reqWithUrl[key] = (parsedUrl as any)[key];
     }
-});
+  });
 }
