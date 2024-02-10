@@ -31,6 +31,22 @@ export class Route {
     return this;
   }
 
+  public put(callback: Function) {
+    const layer = new Layer("/", callback);
+    layer.method = "put";
+    this.method["put"] = true;
+    this.stack.push(layer);
+    return this;
+  }
+
+  public delete(callback: Function) {
+    const layer = new Layer("/", callback);
+    layer.method = "delete";
+    this.method["delete"] = true;
+    this.stack.push(layer);
+    return this;
+  }
+
   public dispatch(
     req: http.IncomingMessage,
     res: http.ServerResponse,

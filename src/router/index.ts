@@ -62,4 +62,17 @@ export class Router {
     route.post(callback);
     return this;
   }
+
+  public put(path: string, callback: Function) {
+    const route = this.route(path);
+    route.put(callback);
+    return this;
+  }
+
+  public delete(path: string, callback: Function) {
+    const route = this.route(path);
+    route.delete(callback);
+    return this;
+  }
+  // Does middleware need to be added to the router? 
 }

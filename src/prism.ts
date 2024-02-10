@@ -31,10 +31,10 @@ export function Prism() {
         path: "*",
         callbackFunction: middlewar,
       } as MiddleWareValues);
-      console.log(middleware);
+      //   console.log(middleware);
     } else {
       middleware.push(middlewar as MiddleWareValues);
-      console.log(middleware);
+      //   console.log(middleware);
     }
   }
 
@@ -42,22 +42,22 @@ export function Prism() {
     const setupPath = setup_path.split("/");
     const currentPath = path.split("/");
     let match = true;
-    console.log("setupPath - ", setupPath);
-    console.log("currentPath - ", currentPath);
+    // console.log("setupPath - ", setupPath);
+    // console.log("currentPath - ", currentPath);
     let params: { [key: string]: string } = {};
     for (let i = 1; i < setupPath.length; i++) {
       var route = setupPath[i];
-      console.log("Route - ", route);
+      //   console.log("Route - ", route);
       var path_ = currentPath[i];
-      console.log("path_ - ", path_);
+      //   console.log("path_ - ", path_);
       if (route.charAt(0) === ":") {
         params[route.substr(1)] = path_;
-        console.log("matched");
+        // console.log("matched");
       } else if (route === "*") {
-        console.log("matched");
+        // console.log("matched");
         break;
       } else if (route !== path_) {
-        console.log("not matched");
+        // console.log("not matched");
         match = false;
         break;
       }
@@ -83,7 +83,7 @@ export function Prism() {
       } else if (current < middleware.length - 1) {
         next();
       } else {
-        console.log(":/ ");
+        // console.log(":/ ");
         req.handler(req, res);
       }
     };
