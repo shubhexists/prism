@@ -23,7 +23,8 @@ export class Router {
       if (matched && layer.route && layer.route.routeHandler(method)) {
         found = true;
         console.log({ matched, params });
-        layer.handleRequest(req, res, params);
+        (req as any).params = params;
+        layer.handleRequest(req, res);
         break;
       } else if (matched) {
         res.statusCode = 405;
@@ -31,7 +32,7 @@ export class Router {
         res.end(`Cannot ${method} ${req.url}`);
         break;
       } else {
-        this.stack[0].handleRequest(req, res, null);
+        this.stack[0].handleRequest(req, res);
         break;
       }
     }

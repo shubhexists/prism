@@ -39,7 +39,7 @@ export class Route {
     const method = req.method?.toLowerCase();
     this.stack.forEach((layer) => {
       if (layer.method === method) {
-        layer.handleRequest(req, res, params);
+        layer.handleRequest(req, res);
       }
     });
   }

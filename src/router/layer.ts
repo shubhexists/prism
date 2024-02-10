@@ -16,10 +16,9 @@ export class Layer {
     this.path = path;
   }
 
-  public handleRequest(req: IncomingMessage, res: ServerResponse, params: any) {
+  public handleRequest(req: IncomingMessage, res: ServerResponse) {
     const handler = this.handler;
-    console.log(params);
-    handler ? handler(req, res, params) : null;
+    handler ? handler(req, res) : null;
   }
 
   public matchPath(path: string): MatchResult {
