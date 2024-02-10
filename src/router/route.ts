@@ -1,5 +1,5 @@
 import { Layer } from "./layer";
-
+import * as http from "http";
 export class Route {
   private path: string;
   private stack: Array<Layer>;
@@ -31,11 +31,15 @@ export class Route {
     return this;
   }
 
-  public dispatch(req: any, res: any) {
-    const method = req.method.toLowerCase();
+  public dispatch(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    params: any
+  ) {
+    const method = req.method?.toLowerCase();
     this.stack.forEach((layer) => {
       if (layer.method === method) {
-        layer.handleRequest(req, res);
+        layer.handleRequest(req, res, params);
       }
     });
   }

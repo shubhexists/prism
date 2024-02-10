@@ -19,9 +19,7 @@ export class Router {
     let found = false;
     for (let i = 1; i < this.stack.length; i++) {
       const layer = this.stack[i];
-      let { matched = false, params = { hey: "bye" } } = layer.matchPath(
-        req.url!
-      );
+      let { matched = false, params = {} } = layer.matchPath(req.url!);
       if (matched && layer.route && layer.route.routeHandler(method)) {
         found = true;
         console.log({ matched, params });
@@ -33,7 +31,7 @@ export class Router {
         res.end(`Cannot ${method} ${req.url}`);
         break;
       } else {
-        this.stack[0].handleRequest(req, res);
+        this.stack[0].handleRequest(req, res, null);
         break;
       }
     }
@@ -43,8 +41,8 @@ export class Router {
     const route = new Route(path);
     const layer = new Layer(
       path,
-      (req: IncomingMessage, res: ServerResponse) => {
-        route.dispatch(req, res);
+      (req: IncomingMessage, res: ServerResponse, params: any) => {
+        route.dispatch(req, res, params);
       }
     );
     layer.route = route;

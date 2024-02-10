@@ -1,3 +1,4 @@
+import { IncomingMessage, ServerResponse } from "http";
 import { Route } from "./route";
 
 export interface MatchResult {
@@ -15,10 +16,10 @@ export class Layer {
     this.path = path;
   }
 
-  public handleRequest(...args: any) {
+  public handleRequest(req: IncomingMessage, res: ServerResponse, params: any) {
     const handler = this.handler;
-    // console.log(args);
-    handler ? handler(...args) : null;
+    console.log(params);
+    handler ? handler(req, res, params) : null;
   }
 
   public matchPath(path: string): MatchResult {

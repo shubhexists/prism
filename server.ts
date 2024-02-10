@@ -15,9 +15,9 @@ app.use({
 
 app.get({
   path: "/about/:id",
-  callbackFunction: (req, res) => {
+  callbackFunction: (req, res, params) => {
     console.log("jrjr")
-    console.log((req as any).params);
+    console.log(params);
     res.send("I am the about page");
   },
 });
