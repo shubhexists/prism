@@ -19,10 +19,21 @@ export class Router {
     let found = false;
     for (let i = 1; i < this.stack.length; i++) {
       const layer = this.stack[i];
-      const { matched = false, params = {} } = layer.matchPath(req.url!);
+      let { matched = false, params = { hey: "bye" } } = layer.matchPath(
+        req.url!
+      );
       if (matched && layer.route && layer.route.routeHandler(method)) {
         found = true;
+        console.log({ matched, params });
         layer.handleRequest(req, res, params);
+        break;
+      } else if (matched) {
+        res.statusCode = 405;
+        res.setHeader("Content-Type", "text/plain");
+        res.end(`Cannot ${method} ${req.url}`);
+        break;
+      } else {
+        this.stack[0].handleRequest(req, res);
         break;
       }
     }

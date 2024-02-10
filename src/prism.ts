@@ -45,7 +45,7 @@ export function Prism() {
     console.log("setupPath - ", setupPath);
     console.log("currentPath - ", currentPath);
     let params: { [key: string]: string } = {};
-    for (let i = 1; i < setupPath.length ; i++) {
+    for (let i = 1; i < setupPath.length; i++) {
       var route = setupPath[i];
       console.log("Route - ", route);
       var path_ = currentPath[i];
@@ -74,7 +74,7 @@ export function Prism() {
       const { matched = false, params = {} } = middlewar
         ? matchPath((req as any).url, middlewar.path)
         : {};
-    //   console.log(matched);
+      //   console.log(matched);
       console.log(current, middleware.length - 1);
       if (matched && current <= middleware.length - 1) {
         // console.log("here");
@@ -83,6 +83,7 @@ export function Prism() {
       } else if (current < middleware.length - 1) {
         next();
       } else {
+        console.log(":/ ");
         req.handler(req, res);
       }
     };

@@ -5,7 +5,7 @@ const app = Prism();
 app.use(cors());
 
 app.use({
-  path: "/about/:id",
+  path: "/about",
   callbackFunction: (req, res, next) => {
     console.log((req as any).params.id);
     console.log("I am a middleware");
@@ -16,7 +16,8 @@ app.use({
 app.get({
   path: "/about/:id",
   callbackFunction: (req, res) => {
-    console.log((req as any).params.id);
+    console.log("jrjr")
+    console.log((req as any).params);
     res.send("I am the about page");
   },
 });

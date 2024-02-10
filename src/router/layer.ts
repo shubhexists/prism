@@ -17,13 +17,13 @@ export class Layer {
 
   public handleRequest(...args: any) {
     const handler = this.handler;
+    // console.log(args);
     handler ? handler(...args) : null;
   }
 
   public matchPath(path: string): MatchResult {
     const setupPath = this.path.split("/");
     const currentPath = path.split("/");
-    
     let match = true;
     let params: { [key: string]: string } = {};
     for (let i = 0; i < setupPath.length; i++) {
@@ -38,6 +38,6 @@ export class Layer {
         break;
       }
     }
-    return { matched: match, params: match ? params : undefined };
+    return match ? { matched: true, params } : { matched: false };
   }
 }
