@@ -19,7 +19,7 @@ export class Router {
     let found = false;
     for (let i = 1; i < this.stack.length; i++) {
       const layer = this.stack[i];
-      const { matched, params } = layer.matchPath(req.url!);
+      const { matched = false, params = {} } = layer.matchPath(req.url!);
       if (matched && layer.route && layer.route.routeHandler(method)) {
         found = true;
         layer.handleRequest(req, res, params);

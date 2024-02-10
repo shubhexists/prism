@@ -31,8 +31,10 @@ export function Prism() {
         path: "*",
         callbackFunction: middlewar,
       } as MiddleWareValues);
+      console.log(middleware);
     } else {
       middleware.push(middlewar as MiddleWareValues);
+      console.log(middleware);
     }
   }
 
@@ -40,42 +42,50 @@ export function Prism() {
     const setupPath = setup_path.split("/");
     const currentPath = path.split("/");
     let match = true;
+    console.log("setupPath - ", setupPath);
+    console.log("currentPath - ", currentPath);
     let params: { [key: string]: string } = {};
-    for (let i = 0; i < setup_path.length; i++) {
+    for (let i = 1; i < setupPath.length ; i++) {
       var route = setupPath[i];
-      var path = currentPath[i];
-      if (route[0] === ":") {
-        params[route.substr(1)] = path;
+      console.log("Route - ", route);
+      var path_ = currentPath[i];
+      console.log("path_ - ", path_);
+      if (route.charAt(0) === ":") {
+        params[route.substr(1)] = path_;
+        console.log("matched");
       } else if (route === "*") {
+        console.log("matched");
         break;
-      } else if (route !== path) {
+      } else if (route !== path_) {
+        console.log("not matched");
         match = false;
         break;
       }
     }
-    return { matched: match, params: match ? params : undefined };
+    console.log({ matched: match, params: match ? params : undefined });
+    return match ? { matched: true, params } : { matched: false };
   }
 
-  function findNext(req: CustomRequest, res: CustomResponse): () => void {
+  function findNext(req: CustomRequest, res: CustomResponse) {
     let current = -1;
-
     const next = () => {
       current += 1;
       const middlewar = middleware[current];
       const { matched = false, params = {} } = middlewar
-        ? matchPath(middlewar.path, req.url || "")
+        ? matchPath((req as any).url, middlewar.path)
         : {};
-
-      if (matched) {
+    //   console.log(matched);
+      console.log(current, middleware.length - 1);
+      if (matched && current <= middleware.length - 1) {
+        // console.log("here");
         (req as any).params = params;
         middlewar.callbackFunction(req, res, next);
-      } else if (current < middleware.length) {
+      } else if (current < middleware.length - 1) {
         next();
       } else {
         req.handler(req, res);
       }
     };
-
     return next;
   }
 
@@ -102,9 +112,9 @@ export function Prism() {
       .createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
         response(res as CustomResponse);
         request(req);
-        handle(req as CustomRequest, res as CustomResponse, () =>
-          router.handle(req, res)
-        );
+        handle(req as CustomRequest, res as CustomResponse, () => {
+          router.handle(req, res);
+        });
       })
       .listen({ port }, () => {
         if (callback) {

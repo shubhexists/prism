@@ -23,7 +23,7 @@ export class Layer {
   public matchPath(path: string): MatchResult {
     const setupPath = this.path.split("/");
     const currentPath = path.split("/");
-
+    
     let match = true;
     let params: { [key: string]: string } = {};
     for (let i = 0; i < setupPath.length; i++) {
