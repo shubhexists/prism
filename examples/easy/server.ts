@@ -1,5 +1,5 @@
 import cors from "cors";
-import { Prism } from "./src/prism";
+import { Prism } from "../../src/prism";
 
 const app = Prism();
 app.use(cors());
