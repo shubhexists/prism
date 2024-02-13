@@ -2,7 +2,7 @@
   "name": "prism-server",
   "version": "0.0.1",
   "description": "",
-  "main": "src/prism.js",
+  "main": "dist/prism.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js"
