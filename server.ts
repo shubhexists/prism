@@ -1,8 +1,8 @@
-import cors from "cors";
-import { Prism } from "../../src/prism";
+// import cors from "cors";
+import { Prism } from "./src/prism";
 
 const app = Prism();
-app.use(cors());
+// app.use(cors());
 
 app.use({
   path: "/about",
@@ -19,6 +19,13 @@ app.get({
     console.log("jrjr");
     console.log((req as any).params.id);
     res.send("I am the about page");
+  },
+});
+
+app.get({
+  path: "/",
+  callbackFunction: (req, res) => {
+    res.send("I am the home page");
   },
 });
 
