@@ -22,7 +22,7 @@ export class Router {
       let { matched = false, params = {} } = layer.matchPath(req.url!);
       if (matched && layer.route && layer.route.routeHandler(method)) {
         found = true;
-        console.log({ matched, params });
+        // console.log({ matched, params });
         (req as any).params = params;
         layer.handleRequest(req, res);
         break;

@@ -62,7 +62,7 @@ export function Prism() {
         break;
       }
     }
-    console.log({ matched: match, params: match ? params : undefined });
+    // console.log({ matched: match, params: match ? params : undefined });
     return match ? { matched: true, params } : { matched: false };
   }
 
@@ -75,7 +75,7 @@ export function Prism() {
         ? matchPath((req as any).url, middlewar.path)
         : {};
       //   console.log(matched);
-      console.log(current, middleware.length - 1);
+      // console.log(current, middleware.length - 1);
       if (matched && current <= middleware.length - 1) {
         // console.log("here");
         (req as any).params = params;
